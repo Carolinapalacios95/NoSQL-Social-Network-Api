@@ -14,13 +14,30 @@ const userSchema = new Schema(
       required: true,
       match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
     },
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "thought",
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
   },
   {
     toJSON: {
       getters: true,
     },
+    id: false,
   }
 );
+
+userSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
+});
 
 const User = model('user', userSchema);
 

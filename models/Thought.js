@@ -4,7 +4,7 @@ const { formatDate } = require("../utils/helpers");
 const reactionSchema = new Schema({
   reactionId: {
     type: Schema.Types.ObjectId,
-    default: Types.ObjectId(),
+    default: Types.ObjectId,
   },
   reactionBody: {
     type: String,
@@ -19,7 +19,12 @@ const reactionSchema = new Schema({
     type: Date,
     default: Date.now,
     get: formatDate,
-  },  
+  },
+},
+{
+    toJSON: {
+        getters: true,
+    }  
 });
 
 const thoughtSchema = new Schema(
@@ -28,7 +33,7 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
       minLength: 1,
-      maxLength: 16,
+      maxLength: 280,
     },
     createdAt: {
       type: Date,
